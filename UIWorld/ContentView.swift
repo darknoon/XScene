@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var radius: Float = 1.0
+    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+
     var body: some View {
         XSceneView {
-            XSphere(radius: 4.0)
+            XSphere(radius: radius)
         }.frame(width: 300, height: 300, alignment: .top)
-//        CheckOrderView()
+        .onReceive(timer, perform: {t in
+            radius = 1.0 + 0.1 * Float(sin(t.timeIntervalSince1970));
+        })
         Text("Hello, world!")
             .padding()
-//        Circle()
-//            .fill(Color.orange)
     }
 }
 

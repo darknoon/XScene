@@ -12,10 +12,15 @@ import SwiftUI
 
 extension XSphere : PlatformXScene {
     func doUpdate(_ node: SCNNode) {
-        print("I'm a sphere");
-
-        let geom = SCNSphere(radius: CGFloat(self.radius))
-        node.geometry = geom
+        
+        if let geom = node.geometry, let geomSphere = geom as? SCNSphere {
+            print("Already a sphere, updating radius to \(radius)")
+            geomSphere.radius = CGFloat(radius)
+        } else {
+            print("I'm a creating sphere of radius \(radius)");
+            let geom = SCNSphere(radius: CGFloat(radius))
+            node.geometry = geom
+        }
     }
 }
 
@@ -51,14 +56,27 @@ struct XSceneView<Content> : NSViewRepresentable where Content : XScene {
     
     func updateNSView(_ scnView: SCNView, context: Context) {
         if let root = scnView.scene?.rootNode {
-            if let c = content as? PlatformXScene {
-                c.doUpdate(root)
+            #if false
+            var c: some XScene = content
+            var p: PlatformXScene?
+            while p == nil {
+                if let ps = c as? PlatformXScene {
+                    p = ps
+                } else {
+                    c = c.body
+                }
+            }
+            #else
+            if let b = content as? PlatformXScene {
+                b.doUpdate(root)
             } else {
+                // TODO: this only works because Body is already an XScene
                 let body = content.body
                 if let b = body as? PlatformXScene {
                     b.doUpdate()
                 }
             }
+            #endif
         }
     }
     
