@@ -14,12 +14,11 @@ struct ContentView: View {
     var body: some View {
         XSceneView {
             XSphere(radius: radius)
+            XSphere(radius: 11.0)
         }.frame(width: 300, height: 300, alignment: .top)
         .onReceive(timer, perform: {t in
             radius = 1.0 + 0.1 * Float(sin(t.timeIntervalSince1970));
         })
-        Text("Hello, world!")
-            .padding()
     }
 }
 
