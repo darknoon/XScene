@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        MySceneView {
+        XSceneView {
             XSphere(radius: 4.0)
         }.frame(width: 300, height: 300, alignment: .top)
 //        CheckOrderView()

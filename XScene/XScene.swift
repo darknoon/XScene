@@ -18,12 +18,23 @@ protocol XScene {
     @XSceneBuilder var body: Self.Body { get }
 }
 
+internal protocol PlatformXScene {
+
+    func doUpdate(_ node: SCNNode)
+
+}
+
+extension PlatformXScene {
+    func doUpdate() {}
+}
+
 struct XSphere : XScene {
     typealias Body = _Never
     
     let radius: Float
 
     var body: _Never = nope()
+    
 }
 
 struct XGroup<Content: XScene> : XScene {

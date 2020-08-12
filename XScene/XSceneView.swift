@@ -9,18 +9,17 @@ import Foundation
 import SceneKit
 import SwiftUI
 
-// TODO: make some kind of view updater that will persist and handle changes in the tree
 
-func _updateScene<C0, C1>(_ node: SCNNode, content: XTupleScene<(C0, C1)>) {
-    _updateScene(node.childNodes[0], content: content.value.0);
-    _updateScene(node.childNodes[1], content: content.value.1);
+extension XSphere : PlatformXScene {
+    func doUpdate(_ node: SCNNode) {
+        print("I'm a sphere");
+
+        let geom = SCNSphere(radius: CGFloat(self.radius))
+        node.geometry = geom
+    }
 }
 
-func _updateScene<XSphere>(_ node: SCNNode, content: XSphere) {
-    
-}
-
-struct XSceneView<Content> : NSViewRepresentable {
+struct XSceneView<Content> : NSViewRepresentable where Content : XScene {
     
     let content: Content
     
@@ -52,7 +51,14 @@ struct XSceneView<Content> : NSViewRepresentable {
     
     func updateNSView(_ scnView: SCNView, context: Context) {
         if let root = scnView.scene?.rootNode {
-            _updateScene(root, content: content)
+            if let c = content as? PlatformXScene {
+                c.doUpdate(root)
+            } else {
+                let body = content.body
+                if let b = body as? PlatformXScene {
+                    b.doUpdate()
+                }
+            }
         }
     }
     
@@ -76,7 +82,7 @@ struct XSceneView<Content> : NSViewRepresentable {
 
 struct SceneKitStuff_Previews: PreviewProvider {
     static var previews: some View {
-        MySceneView{
+        XSceneView{
             XSphere(radius: 12.0)
         }
     }
