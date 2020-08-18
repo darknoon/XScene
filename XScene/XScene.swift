@@ -39,7 +39,7 @@ struct XGroup<Content: XScene> : XScene {
         self.content = content()
     }
 
-    var body: Never { fatalError() }
+    var body: Content { content }
 }
 
 struct XTupleScene<T> : XScene {
