@@ -9,9 +9,26 @@ import Foundation
 import SceneKit
 import SwiftUI
 
+func updateScene<Content : XScene>(tree content: Content, current: SCNNode) {
+    if let b = content as? PlatformXScene {
+        b.doUpdate(current)
+    } else {
+        // TODO: this only works because Body is already an XScene
+        let body = content.body
+        updateScene(tree: body, current: current)
+    }
+
+}
+
+extension AnyXScene : PlatformXScene {
+    func doUpdate(_ node: SCNNode) {
+        let t = type(of: storage)
+        storage.doUpdate(node)
+    }
+}
+
 extension XSphere : PlatformXScene {
     func doUpdate(_ node: SCNNode) {
-        
         if let geom = node.geometry, let geomSphere = geom as? SCNSphere {
             print("Already a sphere, updating radius to \(radius)")
             geomSphere.radius = CGFloat(radius)
@@ -72,27 +89,7 @@ struct XSceneView<Content> : NSViewRepresentable where Content : XScene {
     
     func updateNSView(_ scnView: SCNView, context: Context) {
         if let root = scnView.scene?.rootNode {
-            #if false
-            var c: some XScene = content
-            var p: PlatformXScene?
-            while p == nil {
-                if let ps = c as? PlatformXScene {
-                    p = ps
-                } else {
-                    c = c.body
-                }
-            }
-            #else
-            if let b = content as? PlatformXScene {
-                b.doUpdate(root)
-            } else {
-                // TODO: this only works because Body is already an XScene
-                let body = content.body
-                if let b = body as? PlatformXScene {
-                    b.doUpdate()
-                }
-            }
-            #endif
+            updateScene(tree: content, current: root)
         }
     }
     

@@ -6,25 +6,32 @@
 //
 
 import Foundation
+import SceneKit
 
 // Inspo https://github.com/Cosmo/OpenSwiftUI/blob/master/Sources/OpenSwiftUI/Views/AnyView.swift
 
-class AnyXSceneStorageBase {}
-class AnyXSceneStorage<Content: XScene> : AnyXSceneStorageBase {
+internal class AnyXSceneStorageBase : PlatformXScene {
+    func doUpdate(_ node: SCNNode) {}
+}
+internal class AnyXSceneStorage<Content: XScene> : AnyXSceneStorageBase {
     public var content: Content
     init(_ scene: Content) {
         self.content = scene
     }
+    
     var body: some XScene {
         return self.content
     }
+    
+    override func doUpdate(_ node: SCNNode) {
+        updateScene(tree: content, current: node)
+    }
 }
-
 
 struct AnyXScene : XScene {
     var body: Never { fatalError() }
 
-    private var storage: AnyXSceneStorageBase
+    internal var storage: AnyXSceneStorageBase
     
     init<Content: XScene>(_ scene: Content) {
         self.storage = AnyXSceneStorage<Content>(scene)
