@@ -1,0 +1,1 @@
+XGroup<XTupleScene<(XSphere, XSphere)>>(content: XScene.XTupleScene<(XScene.XSphere, XScene.XSphere)>(value: (XScene.XSphere(radius: 10.0), XScene.XSphere(radius: 0.5))))

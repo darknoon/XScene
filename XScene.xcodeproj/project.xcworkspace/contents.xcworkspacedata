@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/andrew/Developer/iOS/_hacks/UIWorld/XScene.xcodeproj">
+      location = "self:">
    </FileRef>
 </Workspace>

@@ -1,0 +1,1 @@
+XSceneView<XSphere>(content: XScene.XSphere(radius: 10.0))

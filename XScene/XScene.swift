@@ -3,17 +3,15 @@ import SceneKit.ModelIO
 
 import SwiftUI
 
-typealias _Never = ()
-func nope() -> _Never {
-    return ()
+extension Never : XScene {
+    typealias Body = Never
+    var body: Never {
+        fatalError()
+    }
 }
-//func nope() -> Never {
-//    fatalError("This isn't supposed to be called")
-//}
 
 protocol XScene {
-
-    associatedtype Body
+    associatedtype Body : XScene
 
     @XSceneBuilder var body: Self.Body { get }
 }
@@ -29,20 +27,19 @@ extension PlatformXScene {
 }
 
 struct XSphere : XScene {
-    typealias Body = _Never
-    
     let radius: Float
 
-    var body: _Never = nope()
-    
+    var body: Never { fatalError() }
 }
 
 struct XGroup<Content: XScene> : XScene {
-    let content: Content
+    internal let content: Content
 
-    var body: some XScene {
-        return content
+    @inlinable public init(@XSceneBuilder content: () -> Content) {
+        self.content = content()
     }
+
+    var body: Never { fatalError() }
 }
 
 struct XTupleScene<T> : XScene {
@@ -52,18 +49,15 @@ struct XTupleScene<T> : XScene {
         self.value = value
     }
 
-    public typealias Body = _Never
-
-    var body: _Never
+    var body: Never { fatalError() }
 }
 
 
 struct XEmptyScene : XScene {
-    typealias Body = _Never
 
     init() { }
 
-    var body: _Never = nope()
+    var body: Never { fatalError() }
 }
 
 @_functionBuilder

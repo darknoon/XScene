@@ -1,0 +1,1 @@
+XTupleScene<(XSphere, XSphere)>(value: (XScene.XSphere(radius: 10.0), XScene.XSphere(radius: 0.5)))

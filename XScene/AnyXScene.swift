@@ -9,8 +9,8 @@ import Foundation
 
 // Inspo https://github.com/Cosmo/OpenSwiftUI/blob/master/Sources/OpenSwiftUI/Views/AnyView.swift
 
-class AnyXsceneStorageBase {}
-class AnyXsceneStorage<Content: XScene> : AnyXsceneStorageBase {
+class AnyXSceneStorageBase {}
+class AnyXSceneStorage<Content: XScene> : AnyXSceneStorageBase {
     public var content: Content
     init(_ scene: Content) {
         self.content = scene
@@ -22,15 +22,12 @@ class AnyXsceneStorage<Content: XScene> : AnyXsceneStorageBase {
 
 
 struct AnyXScene : XScene {
-    var body: some XScene {
-        XEmptyScene()
-//        fatalError()
-    }
-    
-    private var storage: AnyXsceneStorageBase
+    var body: Never { fatalError() }
+
+    private var storage: AnyXSceneStorageBase
     
     init<Content: XScene>(_ scene: Content) {
-        self.storage = AnyXsceneStorage<Content>(scene)
+        self.storage = AnyXSceneStorage<Content>(scene)
     }
 }
 

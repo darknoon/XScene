@@ -9,7 +9,6 @@ import Foundation
 import SceneKit
 import SwiftUI
 
-
 extension XSphere : PlatformXScene {
     func doUpdate(_ node: SCNNode) {
         
