@@ -1,11 +1,5 @@
-//
-//  SceneKitStuff.swift
-//  UIWorld
-//
-//  Created by Andrew Pouliot on 8/11/20.
-//
+/// Copyright Andrew Pouliot. All rights reserved.
 
-import Foundation
 import SceneKit
 import SwiftUI
 
@@ -17,53 +11,55 @@ func updateScene<Content : XScene>(tree content: Content, current: SCNNode) {
         let body = content.body
         updateScene(tree: body, current: current)
     }
-
 }
 
-extension AnyXScene : PlatformXScene {
-    func doUpdate(_ node: SCNNode) {
-        let t = type(of: storage)
-        storage.doUpdate(node)
-    }
+#if os(macOS)
+import AppKit.NSColor
+typealias PlatformColor = NSColor
+#elseif os(iOS)
+import UIKit.UIColor
+typealias PlatformColor = UIColor
+#endif
+
+enum WorldBackground {
+    case platformColor(PlatformColor)
+    case color(Color)
 }
 
-extension XSphere : PlatformXScene {
-    func doUpdate(_ node: SCNNode) {
-        if let geom = node.geometry, let geomSphere = geom as? SCNSphere {
-            print("Already a sphere, updating radius to \(radius)")
-            geomSphere.radius = CGFloat(radius)
-        } else {
-            print("I'm a creating sphere of radius \(radius)");
-            let geom = SCNSphere(radius: CGFloat(radius))
-            node.geometry = geom
+extension SwiftUI.Color {
+    static var supportsCGColor: Bool {
+        let bun = Bundle(for: SwiftUI.NSHostingView<EmptyView>.self)
+        if let ver = bun.infoDictionary?["CFBundleVersion"] as? String {
+            return "96.0.401".compare(ver, options: .numeric) == .orderedAscending
         }
+        return false
     }
-}
-
-// This obviously does not scale. Can't enumerate all of the possibilities
-extension XTupleScene : PlatformXScene where T == (XSphere, XSphere) {
-    func doUpdate(_ node: SCNNode) {
-        if node.childNodes.count == 2 {
-            value.0.doUpdate(node.childNodes[0])
-            value.1.doUpdate(node.childNodes[1])
-        } else if (node.childNodes.count == 0) {
-            node.addChildNode(SCNNode())
-            node.addChildNode(SCNNode())
-            value.0.doUpdate(node.childNodes[0])
-            value.1.doUpdate(node.childNodes[1])
-        } else {
-            fatalError("Unexpected node configuration")
+    
+    var safeCGColor: CGColor? {
+        if Self.supportsCGColor {
+            return cgColor
         }
+        // Some basic fallback for previous OS versions
+        switch self {
+        case .white:
+            return .white
+        case .black:
+            return .black
+        default:
+            return nil
+        }
+        
     }
 }
 
 struct XSceneView<Content> : NSViewRepresentable where Content : XScene {
     
     let content: Content
+    let background: WorldBackground
     
-    init(@XSceneBuilder _ content: () -> Content) {
+    init(background: WorldBackground = .color(.black), @XSceneBuilder _ content: () -> Content) {
         self.content = content()
-        print("Init with content")
+        self.background = background
     }
     
     func makeNSView(context: Context) -> SCNView {
@@ -71,44 +67,39 @@ struct XSceneView<Content> : NSViewRepresentable where Content : XScene {
         let sceneView = SCNView(frame: CGRect(x:0 , y:0, width: 300, height: 300))
 
         let scene = SCNScene()
-        scene.background.contents = NSColor.red
 
-        //let sph = SCNSphere(radius: 10)
-        //sph.firstMaterial!.emission.contents = NSColor.green
-        //scene.rootNode.addChildNode(SCNNode(geometry: sph))
-        if let finderGuy = loadModel(name: "FinderGuy") {
-            scene.rootNode.addChildNode(finderGuy)
-            dump(finderGuy)
-        }
-
-        sceneView.backgroundColor = .black
         sceneView.scene = scene
         sceneView.showsStatistics = true
         return sceneView
     }
     
-    func updateNSView(_ scnView: SCNView, context: Context) {
-        if let root = scnView.scene?.rootNode {
-            updateScene(tree: content, current: root)
+    private func updateSceneBackground(scene: SCNScene, background: WorldBackground) {
+        switch background {
+        case let .color(color):
+            scene.background.contents = color.safeCGColor
+        case let .platformColor(color):
+            scene.background.contents = color
         }
-    }
-    
-    typealias NSViewType = SCNView
-    
-    func loadModel(name: String) -> SCNNode? {
-        guard let url = Bundle.main.url(forResource: name, withExtension: "usdz") else { return nil }
-        var errOpt: NSError? = nil
-        let mdlAsset = MDLAsset(url: url, vertexDescriptor: nil, bufferAllocator: nil, preserveTopology: true, error: &errOpt)
-        if let err = errOpt {
-            print("Error loading asset, \(err.debugDescription)")
-            return nil
-        }
-        
-        let scene = SCNScene(mdlAsset: mdlAsset)
-        return scene.rootNode
-    }
 
+    }
     
+    func updateNSView(_ scnView: SCNView, context: Context) {
+        guard let scene = scnView.scene else { return }
+        updateSceneBackground(scene: scene, background: background)
+        updateScene(tree: content, current: scene.rootNode)
+    }
+    
+}
+
+// ~View modifier
+// Needs an actual ModifiedView to be efficient?
+extension XSceneView {
+    func background(_ color: Color) -> Self {
+        return Self(background: .color(color), { return content })
+    }
+    func background(_ color: PlatformColor) -> Self {
+        return Self(background: .platformColor(color), { return content })
+    }
 }
 
 struct SceneKitStuff_Previews: PreviewProvider {

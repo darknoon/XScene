@@ -39,7 +39,7 @@ class XSceneTests: XCTestCase {
         assertSnapshot(matching: g.content, as: .description)
     }
 
-    static func getSceneRoot<Content>(rootView: NSHostingView<Content>) -> SCNNode? {
+    static func getScene<Content>(rootView: NSHostingView<Content>) -> SCNScene? {
         guard let plhv = rootView.subviews.first?.subviews.first else {
             XCTFail("Couldn't find a view in our platform host")
             return nil
@@ -48,12 +48,41 @@ class XSceneTests: XCTestCase {
             XCTFail("Found view is not a scene view")
             return nil
         }
-        guard let root = scnView.scene?.rootNode else {
-            XCTFail("Couldn't find root of scene")
-            return nil
-        }
-        return root
+        return scnView.scene
     }
+   
+    func testSetSceneBackgroundColor() throws {
+        if !Color.supportsCGColor {
+            throw XCTSkip()
+        }
+        let v = NSHostingView(rootView: XSceneView{
+            XSphere(radius: 10.0)
+        }.background(Color.red) )
+        v.layout()
+
+        guard let scene = Self.getScene(rootView: v) else { return }
+        
+        let contents = scene.background.contents
+        let cgContents = contents! as! CGColor
+        XCTAssertEqual(cgContents.components, [1, 0, 0, 1])
+    }
+    
+    func testSetSceneBackgroundColorPlatform() {
+        let v = NSHostingView(rootView: XSceneView{
+            XSphere(radius: 10.0)
+        }.background(PlatformColor.red) )
+        v.layout()
+
+        guard let scene = Self.getScene(rootView: v) else { return }
+        
+        let contents = scene.background.contents
+        // This test is completely broken. Thanks, apple.
+        //XCTAssert(CFGetTypeID(contents! as CFTypeRef) == CGColor.typeID, "Body not a color");
+        
+        let cgContents = contents! as! CGColor
+        XCTAssertEqual(cgContents.components, [1, 0, 0, 1])
+    }
+
     
     func testMount() {
         let v = NSHostingView(rootView: XSceneView{
@@ -61,9 +90,7 @@ class XSceneTests: XCTestCase {
         })
         v.layout()
 
-        guard let root = XSceneTests.getSceneRoot(rootView: v) else {
-            return
-        }
+        guard let root = Self.getScene(rootView: v)?.rootNode else { return }
         
         // We should probably put the sphere in a wrapper, but it isn't at the moment
         XCTAssertEqual(root.childNodes.count, 0, "Should just be a sphere")
@@ -78,7 +105,7 @@ class XSceneTests: XCTestCase {
         })
         v.layout()
 
-        guard let root = XSceneTests.getSceneRoot(rootView: v) else {
+        guard let root = Self.getScene(rootView: v)?.rootNode else {
             return
         }
         
@@ -117,7 +144,8 @@ class XSceneTests: XCTestCase {
         let v = NSHostingView(rootView: MyWrapper(pub: pub.eraseToAnyPublisher()))
         v.layout()
         
-        guard let root = XSceneTests.getSceneRoot(rootView: v) else {
+        guard let root = Self.getScene(rootView: v)?.rootNode else {
+            XCTFail("Couldn't find root")
             return
         }
 

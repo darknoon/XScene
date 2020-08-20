@@ -7,6 +7,7 @@
 
 import Cocoa
 import SwiftUI
+import CoreGraphics.CGColor
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {

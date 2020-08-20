@@ -1,1 +1,1 @@
-XSceneView<XSphere>(content: XScene.XSphere(radius: 10.0))
+XSceneView<XSphere>(content: XScene.XSphere(radius: 10.0), background: XScene.WorldBackground.color(black))

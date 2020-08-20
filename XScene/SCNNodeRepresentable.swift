@@ -1,9 +1,4 @@
-//
-//  SCNNodeRepresentable.swift
-//  UIWorld
-//
-//  Created by Andrew Pouliot on 8/11/20.
-//
+/// Copyright Andrew Pouliot. All rights reserved.
 
 import SceneKit
 import SwiftUI
@@ -18,11 +13,10 @@ struct SCNNodeRepresentableContext<Scene> where Scene : SCNNodeRepresentable {
 }
 
 protocol SCNNodeRepresentable {
-    
+    typealias Body = Never
     associatedtype NodeType : SCNNode
     
     func makeNode(context: Self.Context) -> Self.NodeType
-
 
     func updateNode(_ node: Self.NodeType, context: Self.Context)
 
@@ -36,3 +30,4 @@ protocol SCNNodeRepresentable {
     typealias Context = SCNNodeRepresentableContext<Self>
 
 }
+

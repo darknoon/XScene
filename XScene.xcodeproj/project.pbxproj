@@ -19,6 +19,11 @@
 		491AE3EA24E3895900313F2C /* AnyXScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AE3E924E3895900313F2C /* AnyXScene.swift */; };
 		491AE3EC24E3929E00313F2C /* SCNNodeRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AE3EB24E3929E00313F2C /* SCNNodeRepresentable.swift */; };
 		494F9DA924E4D309004EFAA3 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 494F9DA824E4D309004EFAA3 /* SnapshotTesting */; };
+		4954858924ECD391006EB429 /* XGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954858824ECD391006EB429 /* XGroup.swift */; };
+		49C4EA1124ECC0A8005DE4DD /* XSphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C4EA1024ECC0A8005DE4DD /* XSphere.swift */; };
+		49C4EA1324ECC119005DE4DD /* Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C4EA1224ECC119005DE4DD /* Updating.swift */; };
+		49C4EA1924ECC238005DE4DD /* XTupleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C4EA1824ECC238005DE4DD /* XTupleScene.swift */; };
+		49C4EA1B24ECC30F005DE4DD /* XModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C4EA1A24ECC30F005DE4DD /* XModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +63,12 @@
 		491AE3E924E3895900313F2C /* AnyXScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyXScene.swift; sourceTree = "<group>"; };
 		491AE3EB24E3929E00313F2C /* SCNNodeRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNNodeRepresentable.swift; sourceTree = "<group>"; };
 		494DF09E24E7155900B90345 /* __Snapshots__ */ = {isa = PBXFileReference; lastKnownFileType = folder; path = __Snapshots__; sourceTree = "<group>"; };
+		4954858824ECD391006EB429 /* XGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGroup.swift; sourceTree = "<group>"; };
+		4954858A24ECD405006EB429 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
+		49C4EA1024ECC0A8005DE4DD /* XSphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XSphere.swift; sourceTree = "<group>"; };
+		49C4EA1224ECC119005DE4DD /* Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updating.swift; sourceTree = "<group>"; };
+		49C4EA1824ECC238005DE4DD /* XTupleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XTupleScene.swift; sourceTree = "<group>"; };
+		49C4EA1A24ECC30F005DE4DD /* XModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,9 +163,15 @@
 			isa = PBXGroup;
 			children = (
 				491AE3E424E3805500313F2C /* XScene.swift */,
+				4954858824ECD391006EB429 /* XGroup.swift */,
 				491AE3E924E3895900313F2C /* AnyXScene.swift */,
+				49C4EA1224ECC119005DE4DD /* Updating.swift */,
 				491AE3EB24E3929E00313F2C /* SCNNodeRepresentable.swift */,
 				491AE3E624E3807000313F2C /* XSceneView.swift */,
+				49C4EA1024ECC0A8005DE4DD /* XSphere.swift */,
+				49C4EA1A24ECC30F005DE4DD /* XModel.swift */,
+				49C4EA1824ECC238005DE4DD /* XTupleScene.swift */,
+				4954858A24ECD405006EB429 /* TODO.md */,
 			);
 			path = XScene;
 			sourceTree = "<group>";
@@ -295,10 +312,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4954858924ECD391006EB429 /* XGroup.swift in Sources */,
+				49C4EA1124ECC0A8005DE4DD /* XSphere.swift in Sources */,
 				491AE3E724E3807000313F2C /* XSceneView.swift in Sources */,
 				491AE3EC24E3929E00313F2C /* SCNNodeRepresentable.swift in Sources */,
 				491AE3B824E3801A00313F2C /* ContentView.swift in Sources */,
+				49C4EA1B24ECC30F005DE4DD /* XModel.swift in Sources */,
+				49C4EA1924ECC238005DE4DD /* XTupleScene.swift in Sources */,
 				491AE3B624E3801A00313F2C /* AppDelegate.swift in Sources */,
+				49C4EA1324ECC119005DE4DD /* Updating.swift in Sources */,
 				491AE3E524E3805500313F2C /* XScene.swift in Sources */,
 				491AE3EA24E3895900313F2C /* AnyXScene.swift in Sources */,
 			);

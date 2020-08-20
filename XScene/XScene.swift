@@ -3,55 +3,13 @@ import SceneKit.ModelIO
 
 import SwiftUI
 
-extension Never : XScene {
-    typealias Body = Never
-    var body: Never {
-        fatalError()
-    }
-}
-
+/// This is the fundamental protocol in XScene.
+/// Create your scene hierarchy by providing a body
 protocol XScene {
     associatedtype Body : XScene
 
     @XSceneBuilder var body: Self.Body { get }
 }
-
-internal protocol PlatformXScene {
-
-    func doUpdate(_ node: SCNNode)
-
-}
-
-extension PlatformXScene {
-    func doUpdate() {}
-}
-
-struct XSphere : XScene {
-    let radius: Float
-
-    var body: Never { fatalError() }
-}
-
-struct XGroup<Content: XScene> : XScene {
-    internal let content: Content
-
-    @inlinable public init(@XSceneBuilder content: () -> Content) {
-        self.content = content()
-    }
-
-    var body: Content { content }
-}
-
-struct XTupleScene<T> : XScene {
-    public var value: T
-
-    init(_ value: T) {
-        self.value = value
-    }
-
-    var body: Never { fatalError() }
-}
-
 
 struct XEmptyScene : XScene {
 
@@ -83,4 +41,14 @@ struct XSceneBuilder {
         return XTupleScene((c0, c1, c2))
     }
 
+}
+
+struct XScene_Previews: PreviewProvider {
+    static var previews: some View {
+        XSceneView{
+            XGroup{
+                XSphere(radius: 10.0)
+            }
+        }.background(Color.blue)
+    }
 }

@@ -13,6 +13,7 @@ import SceneKit
 internal class AnyXSceneStorageBase : PlatformXScene {
     func doUpdate(_ node: SCNNode) {}
 }
+
 internal class AnyXSceneStorage<Content: XScene> : AnyXSceneStorageBase {
     public var content: Content
     init(_ scene: Content) {
@@ -38,3 +39,9 @@ struct AnyXScene : XScene {
     }
 }
 
+extension AnyXScene : PlatformXScene {
+    func doUpdate(_ node: SCNNode) {
+        // Using a class here for storage, we are able to dispatch to the correct updater
+        storage.doUpdate(node)
+    }
+}
