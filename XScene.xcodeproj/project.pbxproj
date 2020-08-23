@@ -20,6 +20,7 @@
 		491AE3EC24E3929E00313F2C /* SCNNodeRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AE3EB24E3929E00313F2C /* SCNNodeRepresentable.swift */; };
 		494F9DA924E4D309004EFAA3 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 494F9DA824E4D309004EFAA3 /* SnapshotTesting */; };
 		4954858924ECD391006EB429 /* XGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954858824ECD391006EB429 /* XGroup.swift */; };
+		49A2DD6F24EE351E00A7208F /* SceneKitSnapshotting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A2DD6E24EE351E00A7208F /* SceneKitSnapshotting.swift */; };
 		49C4EA1124ECC0A8005DE4DD /* XSphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C4EA1024ECC0A8005DE4DD /* XSphere.swift */; };
 		49C4EA1324ECC119005DE4DD /* Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C4EA1224ECC119005DE4DD /* Updating.swift */; };
 		49C4EA1924ECC238005DE4DD /* XTupleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C4EA1824ECC238005DE4DD /* XTupleScene.swift */; };
@@ -65,6 +66,7 @@
 		494DF09E24E7155900B90345 /* __Snapshots__ */ = {isa = PBXFileReference; lastKnownFileType = folder; path = __Snapshots__; sourceTree = "<group>"; };
 		4954858824ECD391006EB429 /* XGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGroup.swift; sourceTree = "<group>"; };
 		4954858A24ECD405006EB429 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
+		49A2DD6E24EE351E00A7208F /* SceneKitSnapshotting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneKitSnapshotting.swift; sourceTree = "<group>"; };
 		49C4EA1024ECC0A8005DE4DD /* XSphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XSphere.swift; sourceTree = "<group>"; };
 		49C4EA1224ECC119005DE4DD /* Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updating.swift; sourceTree = "<group>"; };
 		49C4EA1824ECC238005DE4DD /* XTupleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XTupleScene.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				494DF09E24E7155900B90345 /* __Snapshots__ */,
 				491AE3CB24E3801B00313F2C /* XSceneTests.swift */,
 				491AE3CD24E3801B00313F2C /* Info.plist */,
+				49A2DD6E24EE351E00A7208F /* SceneKitSnapshotting.swift */,
 			);
 			path = XSceneTests;
 			sourceTree = "<group>";
@@ -162,16 +165,16 @@
 		491AE3E824E3891900313F2C /* XScene */ = {
 			isa = PBXGroup;
 			children = (
+				4954858A24ECD405006EB429 /* TODO.md */,
 				491AE3E424E3805500313F2C /* XScene.swift */,
 				4954858824ECD391006EB429 /* XGroup.swift */,
 				491AE3E924E3895900313F2C /* AnyXScene.swift */,
-				49C4EA1224ECC119005DE4DD /* Updating.swift */,
 				491AE3EB24E3929E00313F2C /* SCNNodeRepresentable.swift */,
 				491AE3E624E3807000313F2C /* XSceneView.swift */,
 				49C4EA1024ECC0A8005DE4DD /* XSphere.swift */,
 				49C4EA1A24ECC30F005DE4DD /* XModel.swift */,
 				49C4EA1824ECC238005DE4DD /* XTupleScene.swift */,
-				4954858A24ECD405006EB429 /* TODO.md */,
+				49C4EA1224ECC119005DE4DD /* Updating.swift */,
 			);
 			path = XScene;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				491AE3CC24E3801B00313F2C /* XSceneTests.swift in Sources */,
+				49A2DD6F24EE351E00A7208F /* SceneKitSnapshotting.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,10 +1,3 @@
-//
-//  XSceneTests.swift
-//  XSceneTests
-//
-//  Created by Andrew Pouliot on 8/11/20.
-//
-
 import XCTest
 import SnapshotTesting
 import SwiftUI
@@ -36,7 +29,6 @@ class XSceneTests: XCTestCase {
             XSphere(radius: 0.5)
         }
         assertSnapshot(matching: g, as: .description)
-        assertSnapshot(matching: g.content, as: .description)
     }
 
     static func getScene<Content>(rootView: NSHostingView<Content>) -> SCNScene? {
@@ -57,10 +49,12 @@ class XSceneTests: XCTestCase {
         }
         let v = NSHostingView(rootView: XSceneView{
             XSphere(radius: 10.0)
-        }.background(Color.red) )
+        }.background(Color(NSColor.red)) )
         v.layout()
 
         guard let scene = Self.getScene(rootView: v) else { return }
+
+        assertSnapshot(matching: scene.background, as: .description)
         
         let contents = scene.background.contents
         let cgContents = contents! as! CGColor
@@ -74,13 +68,7 @@ class XSceneTests: XCTestCase {
         v.layout()
 
         guard let scene = Self.getScene(rootView: v) else { return }
-        
-        let contents = scene.background.contents
-        // This test is completely broken. Thanks, apple.
-        //XCTAssert(CFGetTypeID(contents! as CFTypeRef) == CGColor.typeID, "Body not a color");
-        
-        let cgContents = contents! as! CGColor
-        XCTAssertEqual(cgContents.components, [1, 0, 0, 1])
+        assertSnapshot(matching: scene.background.contents, as: .description)
     }
 
     

@@ -48,7 +48,6 @@ extension SwiftUI.Color {
         default:
             return nil
         }
-        
     }
 }
 
@@ -67,6 +66,7 @@ struct XSceneView<Content> : NSViewRepresentable where Content : XScene {
         let sceneView = SCNView(frame: CGRect(x:0 , y:0, width: 300, height: 300))
 
         let scene = SCNScene()
+        updateSceneBackground(scene: scene, background: background)
 
         sceneView.scene = scene
         sceneView.showsStatistics = true

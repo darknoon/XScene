@@ -13,7 +13,7 @@ protocol XScene {
 
 struct XEmptyScene : XScene {
 
-    init() { }
+    init() {}
 
     var body: Never { fatalError() }
 }
