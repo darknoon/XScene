@@ -25,7 +25,7 @@ internal class AnyXSceneStorage<Content: XScene> : AnyXSceneStorageBase {
     }
     
     override func doUpdate(_ node: SCNNode) {
-        updateScene(tree: content, current: node)
+        updateScene(content: content, node: node)
     }
 }
 

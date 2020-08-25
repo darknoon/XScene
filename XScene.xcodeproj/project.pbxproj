@@ -66,6 +66,7 @@
 		494DF09E24E7155900B90345 /* __Snapshots__ */ = {isa = PBXFileReference; lastKnownFileType = folder; path = __Snapshots__; sourceTree = "<group>"; };
 		4954858824ECD391006EB429 /* XGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XGroup.swift; sourceTree = "<group>"; };
 		4954858A24ECD405006EB429 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
+		497BEFCB24F2F9E000A3133C /* XScene-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XScene-Bridging-Header.h"; sourceTree = "<group>"; };
 		49A2DD6E24EE351E00A7208F /* SceneKitSnapshotting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneKitSnapshotting.swift; sourceTree = "<group>"; };
 		49C4EA1024ECC0A8005DE4DD /* XSphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XSphere.swift; sourceTree = "<group>"; };
 		49C4EA1224ECC119005DE4DD /* Updating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updating.swift; sourceTree = "<group>"; };
@@ -175,6 +176,7 @@
 				49C4EA1A24ECC30F005DE4DD /* XModel.swift */,
 				49C4EA1824ECC238005DE4DD /* XTupleScene.swift */,
 				49C4EA1224ECC119005DE4DD /* Updating.swift */,
+				497BEFCB24F2F9E000A3133C /* XScene-Bridging-Header.h */,
 			);
 			path = XScene;
 			sourceTree = "<group>";
@@ -249,6 +251,7 @@
 				TargetAttributes = {
 					491AE3B124E3801A00313F2C = {
 						CreatedOnToolsVersion = 12.0;
+						LastSwiftMigration = 1200;
 					};
 					491AE3C624E3801B00313F2C = {
 						CreatedOnToolsVersion = 12.0;
@@ -495,6 +498,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = UIWorld/UIWorld.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -510,6 +514,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.darknoon.UIWorld;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "XScene/XScene-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -519,6 +525,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = UIWorld/UIWorld.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -534,6 +541,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.darknoon.UIWorld;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "XScene/XScene-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

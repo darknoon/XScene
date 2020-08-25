@@ -3,16 +3,6 @@
 import SceneKit
 import SwiftUI
 
-func updateScene<Content : XScene>(tree content: Content, current: SCNNode) {
-    if let b = content as? PlatformXScene {
-        b.doUpdate(current)
-    } else {
-        // TODO: this only works because Body is already an XScene
-        let body = content.body
-        updateScene(tree: body, current: current)
-    }
-}
-
 #if os(macOS)
 import AppKit.NSColor
 typealias PlatformColor = NSColor
@@ -86,7 +76,7 @@ struct XSceneView<Content> : NSViewRepresentable where Content : XScene {
     func updateNSView(_ scnView: SCNView, context: Context) {
         guard let scene = scnView.scene else { return }
         updateSceneBackground(scene: scene, background: background)
-        updateScene(tree: content, current: scene.rootNode)
+        updateScene(content: content, node: scene.rootNode)
     }
     
 }

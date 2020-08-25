@@ -5,7 +5,7 @@ import SwiftUI
 
 /// This is the fundamental protocol in XScene.
 /// Create your scene hierarchy by providing a body
-protocol XScene {
+public protocol XScene {
     associatedtype Body : XScene
 
     @XSceneBuilder var body: Self.Body { get }
