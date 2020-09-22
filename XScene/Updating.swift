@@ -2,66 +2,99 @@
 
 import SceneKit
 
+import Runtime
+
 // If the body
 protocol IsBodied {
 }
 
-extension Never : XScene {
-    public typealias Body = Never
-    public var body: Never {
-        fatalError()
-    }
-}
 
-extension XScene {
-    static var isComposite: Bool { true }
-}
-
-internal protocol PlatformXScene {
+internal protocol XSceneUpdater {
+    init()
     func doUpdate(_ node: SCNNode)
 }
 
 
-//func updateScene<Content : XScene>(content: Content, current: SCNNode) {
-//    if let b = content as? PlatformXScene {
-//        b.doUpdate(current)
-//    } else {
-//        // TODO: this only works because Body is already an XScene
-//        let body = content.body
-//        updateScene(content: body, current: current)
-//    }
-//}
+internal protocol PlatformXScene {
+    associatedtype Updater : XSceneUpdater
+}
 
-
-// wip, will this help?
-func updateScene<Content: XScene>(content: Content, node: SCNNode) {
-    print("value body updater for \(type(of: Content.self)) - \(type(of: Content.Body.self))")
-    if Content.Body.self == Never.self {
-        print("Should not be here due to override func value() below!")
-        return
+extension XScene {
+    static func doUpdate(_ content: Self, _ node: SCNNode) {
+        Body.doUpdate(content.body, node)
     }
-    updateScene(content: content.body, node: node)
 }
 
-func updateScene<Content: PlatformXScene>(content: Content, node: SCNNode) {
-    content.doUpdate(node)
+extension XScene where Body == Never{
+    static func doUpdate(_ content: Body, _ node: SCNNode) {
+    }
 }
 
-func updateScene<A: XScene, B: XScene>(content: XTupleScene<(A, B)>, node: SCNNode) {
-    let (a, b) = content.value
-    if node.childNodes.count == 2 {
-        updateScene(content: a, node: node.childNodes[0])
-        updateScene(content: b, node: node.childNodes[1])
-    } else if (node.childNodes.count == 0) {
-        node.addChildNode(SCNNode())
-        node.addChildNode(SCNNode())
-        updateScene(content: a, node: node.childNodes[0])
-        updateScene(content: b, node: node.childNodes[1])
+import Swift
+
+extension XTupleScene : PlatformXScene {
+    
+    struct XTupleSceneUpdater {
+        func doUpdate(_ node: SCNNode) {
+            XTupleScene<Content>._doUpdate
+        }
+    }
+    
+    typealias Updater = XTupleSceneUpdater
+    
+    
+    static func _doUpdate(t: Any, node: SCNNode) {
+        // Blagh!
+    }
+    
+    static func _doUpdate<A, B>(t: (A, B), node: SCNNode) where A: XScene, B: XScene {
+        let a = t.0
+        let b = t.1
+        updateScene(content: a, node: node)
+        updateScene(content: b, node: node)
+    }
+    
+    static func doUpdate<T>(_ content: XTupleScene<T>, _ node: SCNNode) {
+        Self._doUpdate(t: content.value, node: node)
+    }
+    
+    static func doUpdate<T>(_ content: T, _ node: SCNNode) {
+        if T.Type.self == Self.self {
+//            Swift.
+//            Self.doUpdate(content: content as XTupleScene, node: node)
+        }
+    }
+
+}
+
+func updateScene<Content : XScene>(content: Content, node: SCNNode) {
+    if let b = content as? PlatformXScene {
+        b.doUpdate(current)
     } else {
-        fatalError("Unexpected node configuration")
+        // TODO: this only works because Body is already an XScene
+        let body = content.body
+        updateScene(content: body, current: current)
     }
 }
 
+extension XTupleScene {
+    
+    func doUpdate<A: XScene, B: XScene>(content: XTupleScene<(A, B)>, node: SCNNode) {
+        let (a, b) = content.value
+        if node.childNodes.count == 2 {
+            A.doUpdate(content: a, node: node.childNodes[0])
+            B.doUpdate(content: b, node: node.childNodes[1])
+        } else if (node.childNodes.count == 0) {
+            node.addChildNode(SCNNode())
+            node.addChildNode(SCNNode())
+            A.doUpdate(content: a, node: node.childNodes[0])
+            B.doUpdate(content: b, node: node.childNodes[1])
+        } else {
+            fatalError("Unexpected node configuration")
+        }
+    }
+
+}
 
 
 //extension Updating where Content : PlatformXScene {

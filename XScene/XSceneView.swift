@@ -76,7 +76,8 @@ struct XSceneView<Content> : NSViewRepresentable where Content : XScene {
     func updateNSView(_ scnView: SCNView, context: Context) {
         guard let scene = scnView.scene else { return }
         updateSceneBackground(scene: scene, background: background)
-        updateScene(content: content, node: scene.rootNode)
+//        updateScene(content: content, node: scene.rootNode)
+        content.doUpdate(scene.rootNode)
     }
     
 }

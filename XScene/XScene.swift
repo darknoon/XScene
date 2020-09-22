@@ -12,10 +12,16 @@ public protocol XScene {
 }
 
 struct XEmptyScene : XScene {
-
     init() {}
-
     var body: Never { fatalError() }
+}
+
+
+extension Never : XScene {
+    public typealias Body = Never
+    public var body: Never {
+        fatalError()
+    }
 }
 
 @_functionBuilder

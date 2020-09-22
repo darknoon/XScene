@@ -20,6 +20,7 @@
 		491AE3EC24E3929E00313F2C /* SCNNodeRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AE3EB24E3929E00313F2C /* SCNNodeRepresentable.swift */; };
 		494F9DA924E4D309004EFAA3 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 494F9DA824E4D309004EFAA3 /* SnapshotTesting */; };
 		4954858924ECD391006EB429 /* XGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4954858824ECD391006EB429 /* XGroup.swift */; };
+		4957A2A624FD330D0077000E /* Runtime in Frameworks */ = {isa = PBXBuildFile; productRef = 4957A2A524FD330D0077000E /* Runtime */; };
 		49A2DD6F24EE351E00A7208F /* SceneKitSnapshotting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A2DD6E24EE351E00A7208F /* SceneKitSnapshotting.swift */; };
 		49C4EA1124ECC0A8005DE4DD /* XSphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C4EA1024ECC0A8005DE4DD /* XSphere.swift */; };
 		49C4EA1324ECC119005DE4DD /* Updating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C4EA1224ECC119005DE4DD /* Updating.swift */; };
@@ -79,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4957A2A624FD330D0077000E /* Runtime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +199,9 @@
 			dependencies = (
 			);
 			name = XScene;
+			packageProductDependencies = (
+				4957A2A524FD330D0077000E /* Runtime */,
+			);
 			productName = UIWorld;
 			productReference = 491AE3B224E3801A00313F2C /* XScene.app */;
 			productType = "com.apple.product-type.application";
@@ -274,6 +279,7 @@
 			mainGroup = 491AE3A924E3801A00313F2C;
 			packageReferences = (
 				494F9DA724E4D309004EFAA3 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+				4957A2A424FD330D0077000E /* XCRemoteSwiftPackageReference "Runtime" */,
 			);
 			productRefGroup = 491AE3B324E3801A00313F2C /* Products */;
 			projectDirPath = "";
@@ -676,6 +682,14 @@
 				minimumVersion = 1.8.1;
 			};
 		};
+		4957A2A424FD330D0077000E /* XCRemoteSwiftPackageReference "Runtime" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/wickwirew/Runtime";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -683,6 +697,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 494F9DA724E4D309004EFAA3 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
 			productName = SnapshotTesting;
+		};
+		4957A2A524FD330D0077000E /* Runtime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4957A2A424FD330D0077000E /* XCRemoteSwiftPackageReference "Runtime" */;
+			productName = Runtime;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
